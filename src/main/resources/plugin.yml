@@ -1,0 +1,5 @@
+name: Kits
+main: us.universalpvp.kit.KitMain
+version: 1.0
+author: Avighnash
+description: A kit plugin.
