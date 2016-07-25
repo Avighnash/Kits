@@ -3,6 +3,8 @@ package us.universalpvp.kit.api;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import us.universalpvp.kit.KitMain;
 
 import java.util.ArrayList;
@@ -12,12 +14,30 @@ import java.util.List;
 /**
  * Created by avigh on 7/24/2016.
  */
-public class KitAPI {
-
+public final class KitAPI {
     private static KitAPI api;
 
+    public static KitAPI getAPI() {
+        return api;
+    }
+
+    public static void initialise(JavaPlugin plugin) {
+        if (api != null) {
+            throw new IllegalStateException();
+        }
+        api = new KitAPI(plugin);
+    }
+
+    private final JavaPlugin plugin;
+
+    private List<Kit> registeredKits = new ArrayList<>();
+
+    private KitAPI(JavaPlugin plugin) {
+        this.plugin = plugin;
+    }
+
     public void loadKits() {
-        ConfigurationSection cs = KitMain.getPlugin().getConfig().getConfigurationSection("kits");
+        ConfigurationSection cs = plugin.getConfig().getConfigurationSection("kits");
         for (String cKey : cs.getKeys(false)) {
             int attack = cs.getInt(cKey + ".attack", 0),
                     defence = cs.getInt(cKey + ".defence", 0);
@@ -32,20 +52,11 @@ public class KitAPI {
         getRegisteredKits().clear();
     }
 
-    public static KitAPI getAPI() {
-        if (api == null) {
-            api = new KitAPI();
-        }
-        return api;
-    }
-
-    private static List<Kit> registeredKits = new ArrayList<>();
-
     public List<Kit> getRegisteredKits() {
         return registeredKits;
     }
 
     public void registerKit(Kit... kits) {
-        Arrays.asList(kits).forEach(kit -> registeredKits.add(kit));
+        Arrays.asList(kits).forEach(registeredKits::add);
     }
 }
