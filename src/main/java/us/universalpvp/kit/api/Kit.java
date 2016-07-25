@@ -6,11 +6,11 @@ import org.bukkit.inventory.ItemStack;
  * Created by avigh on 7/23/2016.
  */
 public class Kit {
-    private String name;
-    private int attack, defence;
-    private double health;
+    private final String name;
+    private final int attack, defence;
+    private final double health;
+    private final ItemStack guiItem;
     private ItemStack[] items;
-    private ItemStack guiItem;
 
     public Kit(String name, int attack, int defence, double health, ItemStack guiItem) {
         this.name = name;
