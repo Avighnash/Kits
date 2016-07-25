@@ -6,7 +6,6 @@ import org.bukkit.inventory.ItemStack;
  * Created by avigh on 7/23/2016.
  */
 public class Kit {
-
     private String name;
     private int attack, defence;
     private double health;
@@ -29,10 +28,9 @@ public class Kit {
         return attack;
     }
 
-    public int getEctraDefence() {
+    public int getExtraDefence() {
         return defence;
     }
-
 
     public double getHealth() {
         return health;
